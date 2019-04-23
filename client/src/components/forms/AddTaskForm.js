@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 
 import { Field, Form, reduxForm } from 'redux-form';
 import FieldFileInput from '../../components/FileInputNew';
-import 'filepond/dist/filepond.min.css';
+
 // import submit from '../../components/remoteSubmitButton/AddTaskSubmit';
 import { getCurrentTasks, addTask } from "../../actions/actions";
 
-class AddTaskForm extends Component {
+import 'filepond/dist/filepond.min.css';
 
+class AddTaskForm extends Component {
     handleSubmit = (values) => {
         console.log("add task handleSubmit values", values);
         const { files } = this.props.addForm.values
@@ -21,18 +22,17 @@ class AddTaskForm extends Component {
         }
     }
 
-
     render() {
         const { error } = this.props;
         // console.log("addTask props",this.props);
         return (
             <div>
-                <Form onSubmit={this.props.handleSubmit(this.handleSubmit)}  encType="multipart/form-data" >
+                <Form onSubmit={this.props.handleSubmit(this.handleSubmit)} encType="multipart/form-data" >
                     <h3>Add a new task</h3>
                     <div>
                         <label htmlFor="task">Task</label>
-                        <Field name="summary" component="input" type="text" 
-                        placeholder="Summarize the task" />
+                        <Field name="summary" component="input" type="text"
+                            placeholder="Summarize the task" />
                     </div>
                     <div>
                         <label htmlFor="date">Expected date of task solving</label>
@@ -40,7 +40,7 @@ class AddTaskForm extends Component {
                     </div>
                     <div className="input-field">
                         <Field name="files" component={FieldFileInput} />
-                      
+
                     </div>
                     {error && <strong>{error}</strong>}
                     {/* <button type="submit">Submit</button> */}
@@ -65,8 +65,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default reduxForm({
-    form: 'addForm', // a unique identifier for this form
-    // onSubmit: submit
+    form: 'addForm', 
+    multipartForm: true,
 })(connect(mapStateToProps, mapDispatchToProps)(AddTaskForm))
-
-// export default AddTask

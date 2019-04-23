@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-// import TaskTable from '../../components/TaskTable';
-import CheckboxGroup from '../../components/CheckboxGroup';
-import { Field, Form, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+// import TaskTable from '../../components/TaskTable';
+
+import { Field, Form, reduxForm } from 'redux-form';
+import CheckboxGroup from '../../components/CheckboxGroup';
+
 import { getCurrentTasks, getCompletedTasks, completeTask } from "../../actions/actions";
 
 class CurrentTasks extends Component {
-
     componentDidMount = () => {
         try {
             this.props.getCurrentTasks();
@@ -31,7 +32,6 @@ class CurrentTasks extends Component {
             // this.props.history.push('/');
         }
     };
-
 
     render() {
         const curTasks = this.props.currentTasks;
@@ -62,8 +62,6 @@ class CurrentTasks extends Component {
     }
 }
 
-// export default CurrentTasks
-
 const mapStateToProps = (state) => {
     return {
         currentTasks: state.taskList.currentTasks,
@@ -80,5 +78,5 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default reduxForm({
-    form: 'completeForm' // a unique identifier for this form
+    form: 'completeForm' 
 })(connect(mapStateToProps, mapDispatchToProps)(CurrentTasks))

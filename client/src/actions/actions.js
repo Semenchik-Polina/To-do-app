@@ -61,13 +61,16 @@ export function addTask(summary, date, files) {
             form.append('summary', summary);
             form.append('date', date);
             form.append('files', files);
-            const res = await axios.post('/addTask',
-                { form: form },
-                {
-                    'Content-Type': 'multipart/form-data',
-                    'boundary':'1'
-                }
-            );
+            const options = {
+                method: 'POST',
+                url: '/addTask',
+                data: form,
+                headers: {
+        
+                    'Content-Type': 'multipart/form-data'
+                },
+            }
+            const res = await axios(options);
             console.log("complete task request", res);
 
             dispatch({

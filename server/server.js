@@ -1,22 +1,17 @@
 const express = require('express');
 const multer = require('multer');
-// const bodyParser = require("body-parser");
 const moment = require("moment");
 // const url = require('url');
 const app = express();
+const tasks = require("./data/tasks.json");
+
+// transfer to file with constants
 const port = process.env.PORT || 5000;
+const minId = 100;
+const maxId = 100000000;
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, callback) => {
-//     let path = './data/files/';
-//     callback(null, path);
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname)
-//   },
-
-// });
-// const upload = multer({ storage: storage });
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -30,15 +25,6 @@ const upload = multer({
   })
 });
 
-const type = upload.single('files');
-
-const tasks = require("./data/tasks.json");
-
-const minId = 100;
-const maxId = 100000000;
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 app.get("/tasks", function (req, res) {
   console.log("get tasks");
@@ -46,7 +32,8 @@ app.get("/tasks", function (req, res) {
 });
 
 app.post('/addTask', upload.single('files'), function (req, res, next) {
-  const { summary, date } = req.body.form;
+  console.log(req.body);
+  const { summary, date } = req.body;
   console.log("req.files", req.files);
   const id = Math.floor(Math.random() * (maxId - minId)) + minId;
   let newTask = {
