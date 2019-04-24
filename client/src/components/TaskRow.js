@@ -21,8 +21,9 @@ const TaskRow = (props) => {
                 {task.summary}</td>
             <td>{task.date}</td>
             <td>
-                {/* <% oneTask.files.forEach((file) => { %>
-                            <a download href="/files/<%= file %>"><%=file %></a> */}
+            <a download href= {"/files/" + task.files.filename}>
+                { task.files.filename}
+            </a>
             </td>
         </tr>
     )

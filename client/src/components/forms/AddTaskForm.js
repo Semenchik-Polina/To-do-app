@@ -27,7 +27,7 @@ class AddTaskForm extends Component {
         // console.log("addTask props",this.props);
         return (
             <div>
-                <Form onSubmit={this.props.handleSubmit(this.handleSubmit)} encType="multipart/form-data" >
+                <Form onSubmit={this.props.handleSubmit(this.handleSubmit)} >
                     <h3>Add a new task</h3>
                     <div>
                         <label htmlFor="task">Task</label>
@@ -65,6 +65,5 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default reduxForm({
-    form: 'addForm', 
-    multipartForm: true,
+    form: 'addForm'
 })(connect(mapStateToProps, mapDispatchToProps)(AddTaskForm))
