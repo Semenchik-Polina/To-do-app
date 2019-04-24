@@ -9,14 +9,15 @@ import { getCurrentTasks, addTask } from "../../actions/actions";
 
 import 'filepond/dist/filepond.min.css';
 
-class AddTaskForm extends Component {
+class AddTaskForm extends Component {   
+
     handleSubmit = (values) => {
         console.log("add task handleSubmit values", values);
         const { files } = this.props.addForm.values
         const { summary, date } = values;
         try {
             this.props.addTask(summary, date, files);
-            this.props.getCurrentTasks();
+            // this.props.getCurrentTasks();
         } catch (error) {
             console.log("addTask handleSubmit error:", error)
         }

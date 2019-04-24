@@ -21,41 +21,19 @@ const rootReducer = (state = { currentTasks: [], completedTasks: [] }, action) =
             return { ...state };
         }
         case "ADD_TASK": {
-            return { ...state };
+            const { data } = action.data.addedTask;
+            let newCurrentTasks = state.currentTasks;
+            newCurrentTasks.push(data);
+            return {
+                ...state,
+                currentTasks: newCurrentTasks
+            }
         }
         default: {
             return { ...state };
         }
     }
-
-    // console.log("rootReducer result", state);
-    // return state;
-
-    // try {
-    //     const { data } = await axios.get('/tasks');
-    //     state =  data.tasks ;
-    // } catch (error) {
-    //     console.log(error)
-    // }
-    // console.log("rootReducer state:", state);
-    // return state;
 }
-
-// async function callApi(state = []) {
-//     const result = await axios.get('/tasks')
-//         .then(function (response) {
-//             state = response.data.tasks;
-//         })
-//         .catch(function (error) {
-//             console.log("error", error);
-//         })
-//         .then(function () {
-//             // console.log("get state", state);
-//             return state;
-//         });
-//     console.log("return state", result);
-//     return result;
-// };
 
 export default combineReducers({
     form: formReducer,

@@ -14,7 +14,15 @@ class CurrentTasks extends Component {
         } catch (error) {
             console.log("CurrentTasks componentDidMount error:", error)
         }
-    }
+    }    
+
+    // componentWillReceiveProps()
+
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if (prevProps.currentTasks !== this.props.currentTasks) {
+    //         this.props.handleSubmit(this.handleSubmit);
+    //     }
+    // }
 
     handleSubmit = (values) => {
         if (values.checkedValues && values.checkedValues.length > 0) {

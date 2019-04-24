@@ -42,7 +42,8 @@ app.post('/addTask', upload.single('files'), function (req, res, next) {
     id: id
   };
   tasks.push(newTask);
-  res.sendStatus(200);
+  // res.sendStatus(200);
+  res.send(newTask);
   // req.files - массив файлов `photos`
   // req.body сохранит текстовые поля, если они будут
 })

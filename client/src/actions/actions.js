@@ -67,10 +67,11 @@ export function addTask(summary, date, files) {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            // console.log("complete task request", res);
+            console.log("complete task request", res.data);
 
             dispatch({
-                type: 'ADD_TASK'
+                type: 'ADD_TASK',
+                data: {'addedTask': res}
             });
         } catch (error) {
             console.log("error in addTask action", error);
