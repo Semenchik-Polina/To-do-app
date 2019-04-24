@@ -14,16 +14,6 @@ class CheckboxGroup extends Component {
         return input.onChange(newValue);
     };
 
-//     <tr key={task.id}>
-//     <td> {Input()}
-//         {task.summary}</td>
-//     <td>{task.date}</td>
-//     <td>
-//         {/* <% oneTask.files.forEach((file) => { %>
-//                     <a download href="/files/<%= file %>"><%=file %></a> */}
-//     </td>
-// </tr>
-
 renderCheckbox = input => (option, index) => (
     <tr className="checkbox-group__item" key={index}>
         {/* <label htmlFor={`${input.name}[${index}]`}> */}
@@ -39,13 +29,16 @@ renderCheckbox = input => (option, index) => (
             <span>{option.name}</span>
         </td>
         <td>{option.date}</td>
-        <td>{option.files}</td>
+        <td>
+            <a download href= {"/files/" + option.files.filename}>
+                { option.files.filename}
+            </a>
+             </td>
         {/* </label> */}
     </tr>
 );
 
 render() {
-    // const { options, input, className } = this.props;
     const { options, input } = this.props;
     return (
         <div>

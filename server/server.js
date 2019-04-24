@@ -20,11 +20,10 @@ const upload = multer({
       callback(null, path);
     },
     filename: (req, file, cb) => {
-      cb(null, file.originalname);
+      cb(null, Date.now() + '-' + file.originalname);
     }
   })
 });
-
 
 app.get("/tasks", function (req, res) {
   console.log("get tasks");
@@ -32,15 +31,14 @@ app.get("/tasks", function (req, res) {
 });
 
 app.post('/addTask', upload.single('files'), function (req, res, next) {
-  console.log(req.body);
   const { summary, date } = req.body;
-  console.log("req.files", req.files);
+  console.log("req.files!", req.file);
   const id = Math.floor(Math.random() * (maxId - minId)) + minId;
   let newTask = {
     summary: summary,
     state: "current",
     date: date,
-    files: req.files,
+    files: req.file,
     id: id
   };
   tasks.push(newTask);
