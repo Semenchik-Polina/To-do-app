@@ -15,6 +15,7 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
+    
   },
   "scripts": {
     "start": "react-scripts start",

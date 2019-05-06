@@ -1,14 +1,10 @@
 const express = require('express');
 const multer = require('multer');
-const moment = require("moment");
-// const url = require('url');
 const app = express();
 const tasks = require("./data/tasks.json");
+const uuidv4 = require('uuid/v4');
 
-// transfer to file with constants
-const port = process.env.PORT || 5000;
-const minId = 100;
-const maxId = 100000000;
+const {PORT} = require("./constants/constants")
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -20,7 +16,7 @@ const upload = multer({
       callback(null, path);
     },
     filename: (req, file, cb) => {
-      cb(null, Date.now() + '-' + file.originalname);
+      cb(null, '${Date.now()}-${file.originalname}');
     }
   })
 });
@@ -32,20 +28,17 @@ app.get("/tasks", function (req, res) {
 
 app.post('/addTask', upload.single('files'), function (req, res, next) {
   const { summary, date } = req.body;
-  console.log("req.files!", req.file);
-  const id = Math.floor(Math.random() * (maxId - minId)) + minId;
-  let newTask = {
-    summary: summary,
+  const id = uuidv4();
+  const newTask = {
+    summary,
     state: "current",
-    date: date,
-    files: req.file,
-    id: id
+    date,
+    files: req.file ? req.file : null,
+    id
   };
   tasks.push(newTask);
   // res.sendStatus(200);
   res.send(newTask);
-  // req.files - массив файлов `photos`
-  // req.body сохранит текстовые поля, если они будут
 })
 
 app.post('/completeTask', upload.none(), function (req, res, next) {
@@ -56,8 +49,7 @@ app.post('/completeTask', upload.none(), function (req, res, next) {
       task.state = "completed";
     }
   })
-  //  console.log("tasks in server", tasks);
   res.sendStatus(200);
 })
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

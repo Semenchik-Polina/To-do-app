@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {ACTIONS_TYPES} from '../constants/constants';
 
 const filterTaskList = (tasks, state) => {
     return tasks.filter(function (task) {
@@ -9,6 +10,7 @@ const filterTaskList = (tasks, state) => {
 const getTasks = async (type) => {
     const { data } = await axios.get('/tasks');
     const tasks = filterTaskList(data.tasks, type);
+    
     return tasks;
 }
 
@@ -17,7 +19,7 @@ export function getCurrentTasks() {
         try {
             const tasks = await getTasks("current");
             dispatch({
-                type: 'GET_CUR_TASKS',
+                type: ACTIONS_TYPES.GET_CUR_TASKS,
                 data: { 'currentTasks': tasks },
             });
         } catch (error) {
@@ -31,7 +33,7 @@ export function getCompletedTasks() {
         try {
             const tasks = await getTasks("completed");
             dispatch({
-                type: 'GET_COMPL_TASKS',
+                type: ACTIONS_TYPES.GET_COMPL_TASKS,
                 data: { 'completedTasks': tasks },
             });
         } catch (error) {
@@ -43,10 +45,10 @@ export function getCompletedTasks() {
 export function completeTask(id) {
     return async (dispatch) => {
         try {
-            const res = await axios.post('/completeTask', { params: { id: id } });
+            const res = await axios.post('/completeTask', { params: { id } });
             console.log("complete task request", res);
             dispatch({
-                type: 'COMPLETE_TASK'
+                type: ACTIONS_TYPES.COMPLETE_TASK
             });
         } catch (error) {
             console.log("error in completeTask action", error);
@@ -70,7 +72,7 @@ export function addTask(summary, date, files) {
             console.log("complete task request", res.data);
 
             dispatch({
-                type: 'ADD_TASK',
+                type: ACTIONS_TYPES.ADD_TASK,
                 data: {'addedTask': res}
             });
         } catch (error) {

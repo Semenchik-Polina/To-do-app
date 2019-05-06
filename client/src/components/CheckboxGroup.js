@@ -9,13 +9,13 @@ class CheckboxGroup extends Component {
         } else {
             newValue.splice(newValue.indexOf(option.value), 1);
         }
+
         return input.onChange(newValue);
     };
 
 
     renderCheckbox = (input) => (option, index) => (
         <tr className="checkbox-group__item" key={index}>
-            {/* <label htmlFor={`${input.name}[${index}]`}> */}
             <td>
                 <input
                     type="checkbox"
@@ -33,7 +33,6 @@ class CheckboxGroup extends Component {
                     {option.files ? option.files.filename : ""}
                 </a>
             </td>
-            {/* </label> */}
         </tr>
     );
 

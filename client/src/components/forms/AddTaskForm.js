@@ -3,13 +3,10 @@ import { connect } from 'react-redux';
 
 import { Field, Form, reduxForm } from 'redux-form';
 import FieldFileInput from '../../components/FileInputNew';
-
-// import submit from '../../components/remoteSubmitButton/AddTaskSubmit';
 import { getCurrentTasks, addTask } from "../../actions/actions";
 
-import 'filepond/dist/filepond.min.css';
 
-class AddTaskForm extends Component {   
+class AddTaskForm extends Component {
 
     handleSubmit = (values) => {
         console.log("add task handleSubmit values", values);
@@ -17,7 +14,6 @@ class AddTaskForm extends Component {
         const { summary, date } = values;
         try {
             this.props.addTask(summary, date, files);
-            // this.props.getCurrentTasks();
         } catch (error) {
             console.log("addTask handleSubmit error:", error)
         }
@@ -25,7 +21,6 @@ class AddTaskForm extends Component {
 
     render() {
         const { error } = this.props;
-        // console.log("addTask props",this.props);
         return (
             <div>
                 <Form onSubmit={this.props.handleSubmit(this.handleSubmit)} >
@@ -44,7 +39,6 @@ class AddTaskForm extends Component {
 
                     </div>
                     {error && <strong>{error}</strong>}
-                    {/* <button type="submit">Submit</button> */}
                 </Form>
             </div>
         )

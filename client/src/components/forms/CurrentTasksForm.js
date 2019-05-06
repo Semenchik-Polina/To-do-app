@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import TaskTable from '../../components/TaskTable';
 
 import { Field, Form, reduxForm } from 'redux-form';
 import CheckboxGroup from '../../components/CheckboxGroup';
@@ -14,19 +13,10 @@ class CurrentTasks extends Component {
         } catch (error) {
             console.log("CurrentTasks componentDidMount error:", error)
         }
-    }    
-
-    // componentWillReceiveProps()
-
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     if (prevProps.currentTasks !== this.props.currentTasks) {
-    //         this.props.handleSubmit(this.handleSubmit);
-    //     }
-    // }
+    }
 
     handleSubmit = (values) => {
         if (values.checkedValues && values.checkedValues.length > 0) {
-            // console.log("handle submit values", values);
             try {
                 values.checkedValues.forEach(id => {
                     this.props.completeTask(id);
@@ -36,8 +26,6 @@ class CurrentTasks extends Component {
             } catch (error) {
                 console.log("CurrentTasks handleSubmit error:", error)
             }
-            // this.props.getCurrentTasks();
-            // this.props.history.push('/');
         }
     };
 
@@ -45,17 +33,15 @@ class CurrentTasks extends Component {
         const curTasks = this.props.currentTasks;
         const tasksList = curTasks.length ? (
             <Form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
-                {/* <TaskTable tasks={tasks} handleOptionChange={this.handleOptionChange}
-                    selectedTask={this.state.selectedTask} /> */}
                 <Field
                     name="checkedValues"
                     component={CheckboxGroup}
-                    options={curTasks.map(task => ({ 
-                        name: task.summary, 
-                        value: task.id, 
-                        date: task.date, 
-                        files: task.files 
-                        }))}
+                    options={curTasks.map(task => ({
+                        name: task.summary,
+                        value: task.id,
+                        date: task.date,
+                        files: task.files
+                    }))}
                 />
                 <button type="submit">Complete</button>
             </Form>
@@ -86,5 +72,5 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default reduxForm({
-    form: 'completeForm' 
+    form: 'completeForm'
 })(connect(mapStateToProps, mapDispatchToProps)(CurrentTasks))

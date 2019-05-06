@@ -8,7 +8,6 @@ export default class FieldFileInput extends Component {
 
     onChange(e) {
         const { input: { onChange } } = this.props;
-        // console.log("e.target", e.target.files[0]);
         onChange(e.target.files[0])
     }
 

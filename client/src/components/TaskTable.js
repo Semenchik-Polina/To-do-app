@@ -3,7 +3,6 @@ import TaskRow from './TaskRow'
 
 const TaskTable = (props) => {
     const { tasks, handleOptionChange, selectedTask } = props;
-   
 
     return (
         <table>

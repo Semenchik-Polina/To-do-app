@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getCompletedTasks } from "../actions/actions";
 
 class CompletedTasks extends Component {
+    
     componentDidMount = async () => {
         try {
             this.props.getCompletedTasks();
@@ -14,12 +15,14 @@ class CompletedTasks extends Component {
 
     render() {
         const { completedTasks } = this.props;
+        
         const tasksList = completedTasks.length ? (
             < TaskTable tasks={completedTasks} handleOptionChange={null}
                 selectedTask={null} />
         ) : (
                 <p className="center">You have no completed tasks</p>
             );
+
         return (
             <div className="tasks collection">
                 {tasksList}
@@ -41,6 +44,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default (connect(mapStateToProps, mapDispatchToProps)(CompletedTasks))
-
-
-// export default CompletedTasks

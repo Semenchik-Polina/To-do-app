@@ -8,13 +8,7 @@ class App extends Component {
   state = {
     tasks: []
   }
-
-  addTask = (task) => {
-    task.id = this.state.tasks.length;
-    let tasks = [...this.state.tasks, task];
-    this.setState({ tasks });
-  }
-
+  
   render() {
     return (
       <div className="App">
