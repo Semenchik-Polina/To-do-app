@@ -1,5 +1,5 @@
 import React from 'react';
-import TaskRow from './TaskRow'
+import TaskRow from './TaskRow';
 
 const TaskTable = (props) => {
     const { tasks, handleOptionChange, selectedTask } = props;
@@ -14,14 +14,17 @@ const TaskTable = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {tasks.map((task) =>
-                    < TaskRow task={task} handleOptionChange={handleOptionChange}
-                        selectedTask={selectedTask} key={task.id} />
-                )}
+                {tasks.map((task) => (
+                    <TaskRow
+                        task={task}
+                        handleOptionChange={handleOptionChange}
+                        selectedTask={selectedTask}
+                        key={task.id}
+                    />
+                ))}
             </tbody>
         </table>
     );
-}
+};
 
-
-export default TaskTable
+export default TaskTable;

@@ -1,59 +1,60 @@
-import axios from 'axios';
-import {ACTIONS_TYPES} from '../constants/constants';
+import { ACTIONS_TYPES } from '../constants/constants';
+import controllers from '../controllers/controllers';
 
 const filterTaskList = (tasks, state) => {
-    return tasks.filter(function (task) {
+    return tasks.filter(function(task) {
         return task.state === state;
     });
-}
+};
 
 const getTasks = async (type) => {
-    const { data } = await axios.get('/tasks');
+    const { data } = await controllers.getTasks();
     const tasks = filterTaskList(data.tasks, type);
-    
+
     return tasks;
-}
+};
 
 export function getCurrentTasks() {
     return async (dispatch) => {
         try {
-            const tasks = await getTasks("current");
+            const tasks = await getTasks('current');
             dispatch({
                 type: ACTIONS_TYPES.GET_CUR_TASKS,
-                data: { 'currentTasks': tasks },
+                data: { currentTasks: tasks },
             });
         } catch (error) {
-            console.log("error in getCurrentTasks action", error);
+            console.log('error in getCurrentTasks action', error);
         }
-    }
+    };
 }
 
 export function getCompletedTasks() {
     return async (dispatch) => {
         try {
-            const tasks = await getTasks("completed");
+            const tasks = await getTasks('completed');
             dispatch({
                 type: ACTIONS_TYPES.GET_COMPL_TASKS,
-                data: { 'completedTasks': tasks },
+                data: { completedTasks: tasks },
             });
         } catch (error) {
-            console.log("error in getTask action", error);
+            console.log('error in getTask action', error);
         }
-    }
+    };
 }
 
 export function completeTask(id) {
     return async (dispatch) => {
         try {
-            const res = await axios.post('/completeTask', { params: { id } });
-            console.log("complete task request", res);
+            const res = await controllers.completeTask(id);
+            console.log('complete task res: ', res);
             dispatch({
-                type: ACTIONS_TYPES.COMPLETE_TASK
+                type: ACTIONS_TYPES.COMPLETE_TASK,
+                data: { completedTask: res },
             });
         } catch (error) {
-            console.log("error in completeTask action", error);
+            console.log('error in completeTask action', error);
         }
-    }
+    };
 }
 
 export function addTask(summary, date, files) {
@@ -64,21 +65,15 @@ export function addTask(summary, date, files) {
             form.append('date', date);
             form.append('files', files);
 
-            const res = await axios.post('/addTask', form, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-            console.log("complete task request", res.data);
+            const res = await controllers.addTask(form);
+            console.log('complete task request', res.data);
 
             dispatch({
                 type: ACTIONS_TYPES.ADD_TASK,
-                data: {'addedTask': res}
+                data: { addedTask: res },
             });
         } catch (error) {
-            console.log("error in addTask action", error);
+            console.log('error in addTask action', error);
         }
-    }
+    };
 }
-
-
