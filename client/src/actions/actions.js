@@ -1,29 +1,23 @@
 import { ACTIONS_TYPES } from '../constants/constants';
 import controllers from '../controllers/controllers';
 
-const filterTaskList = (tasks, state) => {
-    return tasks.filter(function(task) {
-        return task.state === state;
-    });
-};
-
-const getTasks = async (type) => {
-    const { data } = await controllers.getTasks();
-    const tasks = filterTaskList(data.tasks, type);
-
-    return tasks;
-};
+function handleError(err, dispatch) {
+    if (err.status === 401) {
+        dispatch({ type: ACTIONS_TYPES.RESPONSE_401 });
+    }
+}
 
 export function getCurrentTasks() {
     return async (dispatch) => {
         try {
-            const tasks = await getTasks('current');
+            const res = await controllers.getCurrentTasks();
+            const { currentTasks } = res.data;
             dispatch({
                 type: ACTIONS_TYPES.GET_CUR_TASKS,
-                data: { currentTasks: tasks },
+                data: { currentTasks },
             });
         } catch (error) {
-            console.log('error in getCurrentTasks action', error);
+            handleError(dispatch, error);
         }
     };
 }
@@ -31,13 +25,14 @@ export function getCurrentTasks() {
 export function getCompletedTasks() {
     return async (dispatch) => {
         try {
-            const tasks = await getTasks('completed');
+            const res = await controllers.getCompletedTasks();
+            const { completedTasks } = res.data;
             dispatch({
                 type: ACTIONS_TYPES.GET_COMPL_TASKS,
-                data: { completedTasks: tasks },
+                data: { completedTasks },
             });
         } catch (error) {
-            console.log('error in getTask action', error);
+            handleError(dispatch, error);
         }
     };
 }
@@ -45,14 +40,13 @@ export function getCompletedTasks() {
 export function completeTask(id) {
     return async (dispatch) => {
         try {
-            const res = await controllers.completeTask(id);
-            console.log('complete task res: ', res);
+            const completedTask = await controllers.completeTask(id);
             dispatch({
                 type: ACTIONS_TYPES.COMPLETE_TASK,
-                data: { completedTask: res },
+                data: { completedTask },
             });
         } catch (error) {
-            console.log('error in completeTask action', error);
+            handleError(dispatch, error);
         }
     };
 }
@@ -65,15 +59,41 @@ export function addTask(summary, date, files) {
             form.append('date', date);
             form.append('files', files);
 
-            const res = await controllers.addTask(form);
-            console.log('complete task request', res.data);
-
+            const addedTask = await controllers.addTask(form);
             dispatch({
                 type: ACTIONS_TYPES.ADD_TASK,
-                data: { addedTask: res },
+                data: { addedTask },
             });
         } catch (error) {
-            console.log('error in addTask action', error);
+            handleError(dispatch, error);
+        }
+    };
+}
+
+export function login(data) {
+    return async (dispatch) => {
+        try {
+            const user = await controllers.login(data);
+            dispatch({
+                type: ACTIONS_TYPES.LOGIN,
+                data: { user },
+            });
+        } catch (error) {
+            console.log('error in login action', error);
+        }
+    };
+}
+
+export function logout() {
+    return async (dispatch) => {
+        try {
+            const res = await controllers.logout();
+            dispatch({
+                type: ACTIONS_TYPES.LOGOUT,
+                data: { res },
+            });
+        } catch (error) {
+            console.log('error in logout action', error);
         }
     };
 }

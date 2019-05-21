@@ -20,7 +20,7 @@ class AddTaskForm extends Component {
                     <h3>Add a new task</h3>
                     <div>
                         <label htmlFor="task">Task</label>
-                        <Field name="summary" component="input" type="text" placeholder="Summarize the task" />
+                        <Field name="summary" component="input" type="text" placeholder="Summarize the task" required />
                     </div>
                     <div>
                         <label htmlFor="date">Expected date of task solving</label>
@@ -40,7 +40,7 @@ class AddTaskForm extends Component {
 const mapStateToProps = (state) => {
     return {
         currentTasks: state.taskList.currentTasks,
-        addForm: state.form.addForm,
+        // addTaskForm: state.form.addForm,
     };
 };
 
@@ -52,7 +52,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default reduxForm({
-    form: 'addForm',
+    form: 'addTaskForm',
 })(
     connect(
         mapStateToProps,

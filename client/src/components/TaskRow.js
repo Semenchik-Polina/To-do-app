@@ -15,7 +15,6 @@ const TaskRow = (props) => {
     return (
         <tr key={task.id}>
             <td>
-                {' '}
                 {Input()}
                 {task.summary}
             </td>
